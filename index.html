@@ -490,65 +490,93 @@
       margin-top: 2px;
     }
 
-    .skills-wrap {}
-
-    .skill-block {
-      margin-bottom: 26px;
+    /* ── SKILL CARDS ── */
+    .skill-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    .skill-cat {
-      font-size: 0.67rem;
-      font-weight: 600;
-      letter-spacing: 2px;
+    .sk-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 16px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .sk-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .sk-card.sk-devops::before { background: var(--accent2); }
+    .sk-card.sk-dev::before    { background: var(--accent3); }
+    .sk-card.sk-db::before     { background: #a04c3c; }
+    .sk-card.sk-spec::before   { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    .sk-card:hover {
+      box-shadow: 0 8px 28px var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .sk-card.sk-spec {
+      grid-column: 1 / -1;
+    }
+
+    .sk-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sk-emoji { font-size: 1.05rem; }
+
+    .sk-name {
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
+      color: var(--accent);
     }
 
-    .tags {
+    .sk-card.sk-devops .sk-name { color: #a86523; }
+    .sk-card.sk-dev .sk-name    { color: var(--accent3); }
+    .sk-card.sk-db .sk-name     { color: #a04c3c; }
+    .sk-card.sk-spec .sk-name   { color: var(--muted); }
+
+    .sk-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 5px;
     }
 
-    .tag {
-      padding: 5px 13px;
-      border-radius: 100px;
-      font-size: 0.77rem;
+    .sk-tag {
+      font-size: 0.73rem;
       font-weight: 500;
-      transition: all 0.2s;
+      padding: 4px 10px;
+      border-radius: 5px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      transition: all 0.15s;
       cursor: default;
-      border: 1.5px solid;
     }
 
-    .tag.cloud {
-      border-color: rgba(26, 58, 92, 0.25);
-      color: var(--accent);
-      background: rgba(26, 58, 92, 0.05);
-    }
-
-    .tag.devops {
-      border-color: rgba(201, 132, 58, 0.3);
-      color: #a86523;
-      background: rgba(201, 132, 58, 0.07);
-    }
-
-    .tag.dev {
-      border-color: rgba(46, 125, 94, 0.3);
-      color: var(--accent3);
-      background: rgba(46, 125, 94, 0.06);
-    }
-
-    .tag.db {
-      border-color: rgba(160, 80, 60, 0.3);
-      color: #a04c3c;
-      background: rgba(160, 80, 60, 0.06);
-    }
-
-    .tag:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow);
-    }
+    .sk-card.sk-cloud:hover  .sk-tag { border-color: rgba(26,58,92,0.25);   color: var(--accent); }
+    .sk-card.sk-devops:hover .sk-tag { border-color: rgba(201,132,58,0.3);  color: #a86523; }
+    .sk-card.sk-dev:hover    .sk-tag { border-color: rgba(46,125,94,0.3);   color: var(--accent3); }
+    .sk-card.sk-db:hover     .sk-tag { border-color: rgba(160,80,60,0.3);   color: #a04c3c; }
+    .sk-card.sk-spec:hover   .sk-tag { border-color: rgba(26,58,92,0.2);    color: var(--accent); }
 
     /* ── EXPERIENCE ── */
     #experience {
@@ -1147,11 +1175,10 @@
 
   <!-- HERO -->
   <section id="hero">
-    <!-- LEFT: Full-size professional photo -->
     <div class="hero-left">
       <div class="hero-photo-wrap">
         <img src="my.jpeg" alt="Ashish Srivastav – DevOps Engineer"
-          onerror="this.onerror=null;this.src='https://randomuser.me/api/portraits/men/32.jpg'">
+          onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500?text=Ashish+Srivastav';">
         <div class="hero-corner"></div>
         <div class="hero-corner-bl"></div>
         <div class="hero-photo-label">
@@ -1161,14 +1188,13 @@
       </div>
     </div>
 
-    <!-- RIGHT: Content -->
     <div class="hero-right">
       <div class="hero-eyebrow">Open to Opportunities</div>
       <h1 class="hero-h1">Building Systems<br>That <em>Scale.</em></h1>
       <p class="hero-role">DevOps Engineer &nbsp;·&nbsp; Full-Stack Developer &nbsp;·&nbsp; Database Administrator</p>
       <p class="hero-desc">
-        3.0+ years designing production-grade infrastructure on AWS, Azure & Oracle Cloud. Passionate about clean CI/CD
-        pipelines, container orchestration, and systems that simply never fail.
+        <span id="expText">3+</span> years designing production-grade infrastructure on AWS, Azure & Oracle Cloud.
+        Passionate about clean CI/CD pipelines, container orchestration, and systems that simply never fail.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">View Projects →</a>
@@ -1176,11 +1202,11 @@
       </div>
       <div class="hero-stats">
         <div>
-          <div class="stat-num">3.0+</div>
+          <div class="stat-num" id="statExp">3+</div>
           <div class="stat-label">Years Experience</div>
         </div>
         <div>
-          <div class="stat-num">4</div>
+          <div class="stat-num">10</div>
           <div class="stat-label">Live Projects</div>
         </div>
         <div>
@@ -1202,7 +1228,7 @@
     <div class="about-grid">
       <div>
         <div class="about-text">
-          <p>I'm an experienced DevOps Engineer and Full-Stack Developer with over 3.0 years of hands-on experience
+          <p>I'm an experienced DevOps Engineer and Full-Stack Developer with over <span id="aboutExp">3+</span> years of hands-on experience
             designing, deploying, and managing scalable systems across AWS, Azure, and Oracle Cloud Infrastructure.</p>
           <p>My expertise spans building robust CI/CD pipelines, orchestrating containerized microservices with Docker
             and Kubernetes, and automating infrastructure for reliable zero-downtime delivery.</p>
@@ -1234,42 +1260,90 @@
         </div>
       </div>
 
-      <div class="skills-wrap">
-        <div class="skill-block">
-          <div class="skill-cat">Cloud & Infrastructure</div>
-          <div class="tags">
-            <span class="tag cloud">AWS EC2</span><span class="tag cloud">AWS IAM</span><span class="tag cloud">AWS
-              S3</span>
-            <span class="tag cloud">Azure DevOps</span><span class="tag cloud">Oracle OCI</span><span
-              class="tag cloud">VPC</span>
+      <div class="skill-cards">
+
+        <div class="sk-card sk-cloud">
+          <div class="sk-head">
+            <span class="sk-emoji">☁️</span>
+            <span class="sk-name">Cloud &amp; Infrastructure</span>
+          </div>
+          <div class="sk-tags">
+            <span class="sk-tag">AWS EC2</span>
+            <span class="sk-tag">AWS IAM</span>
+            <span class="sk-tag">AWS S3</span>
+            <span class="sk-tag">Azure DevOps</span>
+            <span class="sk-tag">Oracle OCI</span>
+            <span class="sk-tag">OCI Object Storage</span>
+            <span class="sk-tag">VPC</span>
+            <span class="sk-tag">Nginx</span>
           </div>
         </div>
-        <div class="skill-block">
-          <div class="skill-cat">DevOps & Containers</div>
-          <div class="tags">
-            <span class="tag devops">Kubernetes</span><span class="tag devops">Docker</span><span
-              class="tag devops">Helm Charts</span>
-            <span class="tag devops">CI/CD Pipelines</span><span class="tag devops">Linux Admin</span><span
-              class="tag devops">Ingress</span>
+
+        <div class="sk-card sk-devops">
+          <div class="sk-head">
+            <span class="sk-emoji">🚀</span>
+            <span class="sk-name">DevOps &amp; Containers</span>
+          </div>
+          <div class="sk-tags">
+            <span class="sk-tag">Kubernetes</span>
+            <span class="sk-tag">Docker</span>
+            <span class="sk-tag">Helm Charts</span>
+            <span class="sk-tag">CI/CD Pipelines</span>
+            <span class="sk-tag">Prometheus</span>
+            <span class="sk-tag">Grafana</span>
+            <span class="sk-tag">Linux Admin</span>
+            <span class="sk-tag">PM2</span>
           </div>
         </div>
-        <div class="skill-block">
-          <div class="skill-cat">Development</div>
-          <div class="tags">
-            <span class="tag dev">Java 8</span><span class="tag dev">Spring Boot</span><span
-              class="tag dev">Angular</span>
-            <span class="tag dev">JPA & Hibernate</span><span class="tag dev">REST APIs</span><span
-              class="tag dev">Node.js</span>
+
+        <div class="sk-card sk-dev">
+          <div class="sk-head">
+            <span class="sk-emoji">💻</span>
+            <span class="sk-name">Development</span>
+          </div>
+          <div class="sk-tags">
+            <span class="sk-tag">React + Vite</span>
+            <span class="sk-tag">Node.js</span>
+            <span class="sk-tag">Spring Boot</span>
+            <span class="sk-tag">Angular</span>
+            <span class="sk-tag">Java 8</span>
+            <span class="sk-tag">REST APIs</span>
+            <span class="sk-tag">JWT Auth</span>
+            <span class="sk-tag">Capacitor</span>
           </div>
         </div>
-        <div class="skill-block">
-          <div class="skill-cat">Database & Caching</div>
-          <div class="tags">
-            <span class="tag db">MySQL Cluster</span><span class="tag db">Query Optimization</span>
-            <span class="tag db">Replication</span><span class="tag db">Redis Cache</span><span class="tag db">Backup &
-              Recovery</span>
+
+        <div class="sk-card sk-db">
+          <div class="sk-head">
+            <span class="sk-emoji">🗄️</span>
+            <span class="sk-name">Database &amp; Caching</span>
+          </div>
+          <div class="sk-tags">
+            <span class="sk-tag">MySQL InnoDB Cluster</span>
+            <span class="sk-tag">Replication</span>
+            <span class="sk-tag">Query Optimization</span>
+            <span class="sk-tag">Redis Cache</span>
+            <span class="sk-tag">Backup &amp; Recovery</span>
+            <span class="sk-tag">Audit Compliance</span>
           </div>
         </div>
+
+        <div class="sk-card sk-spec">
+          <div class="sk-head">
+            <span class="sk-emoji">⚡</span>
+            <span class="sk-name">Specialty</span>
+          </div>
+          <div class="sk-tags">
+            <span class="sk-tag">Asterisk PBX</span>
+            <span class="sk-tag">PJSIP</span>
+            <span class="sk-tag">FastAGI</span>
+            <span class="sk-tag">Gemini AI API</span>
+            <span class="sk-tag">Zimbra Mail</span>
+            <span class="sk-tag">Certbot / SSL</span>
+            <span class="sk-tag">DKIM / SPF / DMARC</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1278,8 +1352,7 @@
   <section id="experience" class="section-wrap">
     <div class="section-eyebrow">Experience</div>
     <h2 class="section-title">Where I've Worked</h2>
-    <p class="section-sub">Growing across DevOps, full-stack development, and database administration over 3.0+ years in
-      production environments.</p>
+    <p class="section-sub">Growing across DevOps, full-stack development, and database administration over <span id="expSub">3+</span> years in production environments.</p>
 
     <div class="timeline">
       <div class="tl-item">
@@ -1291,37 +1364,28 @@
         </div>
         <div class="tl-card">
           <ul class="resp-list">
-            <li>Managing a 5-Node MySQL Cluster in a high-availability production environment ensuring zero data loss
-              and maximum uptime.</li>
-            <li>Monitoring cluster health, replication status, and failover mechanisms; troubleshooting replication lag
-              and node desynchronization.</li>
-            <li>Handling database performance tuning, query optimization, index management, and full/incremental backup
-              strategies.</li>
-            <li>Implementing user access control, security policies, audit compliance, and supporting application teams
-              with schema changes.</li>
+            <li>Managing a 5-Node MySQL InnoDB Cluster (3 cluster nodes + 2 read replicas) in a high-availability production environment ensuring zero data loss and maximum uptime.</li>
+            <li>Monitoring cluster health, replication status, and failover mechanisms; resolved a duplicate server_id issue using SET PERSIST on MySQL 8.0+.</li>
+            <li>Built a Python binlog-sync service and auto-generated audit triggers feeding a React + Node.js monitoring dashboard covering table audit, SP history, DB size and server health.</li>
+            <li>Handling database performance tuning, query optimization, index management, full/incremental backup strategies, and audit compliance.</li>
           </ul>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-period">Feb 2023 – Present</div>
+        <div class="tl-dot now"></div>
+        <div class="tl-period">Feb 2023 – Present &nbsp;·&nbsp; <span id="tenureBadge"></span></div>
         <div class="tl-head">
           <h3 class="tl-title">DevOps Engineer & Full-Stack Developer</h3>
           <span class="tl-co">Allatone Solution Pvt. Ltd.</span>
         </div>
         <div class="tl-card">
           <ul class="resp-list">
-            <li>Designed, deployed, and managed containerized microservices using Docker and Kubernetes across AWS,
-              Azure, and Oracle OCI.</li>
-            <li>Built and maintained Helm charts for versioned, repeatable, scalable deployments with auto-scaling and
-              load balancing.</li>
-            <li>Automated CI/CD pipelines using Azure DevOps integrating Docker and Kubernetes for seamless
-              zero-downtime deployments.</li>
-            <li>Managed AWS services (EC2, IAM, VPC, S3) and configured Kubernetes Ingress controllers for secure
-              traffic routing.</li>
-            <li>Developed four web-based applications using Angular, Spring Boot, Java 8, MySQL, and Docker on cloud
-              VMs.</li>
+            <li>Own 10+ internal systems end-to-end — HRMS, VMS, File Management, Mail Server, VoIP and Monitoring — from code through infrastructure to SSL and production deployment.</li>
+            <li>Designed, deployed, and managed containerized microservices using Docker and Kubernetes across AWS, Azure, and Oracle OCI; authored versioned Helm charts for zero-downtime deployments.</li>
+            <li>Automated CI/CD pipelines using Azure DevOps integrating Docker and Kubernetes; configured Ingress controllers, auto-scaling and load balancing.</li>
+            <li>Set up Zimbra FOSS mail server with Certbot TLS, DKIM and SPF/DMARC; deployed Prometheus + Grafana observability stack over the MySQL estate.</li>
+            <li>Built Allatone HRMS (30+ modules, Capacitor Android app) and Vendor Management System with AI invoice parsing via Gemini API and live KYC verification via Perfios.</li>
           </ul>
         </div>
       </div>
@@ -1335,12 +1399,9 @@
         </div>
         <div class="tl-card">
           <ul class="resp-list">
-            <li>Developed web applications using Spring Boot, Angular, and MySQL during a 4-month internship program.
-            </li>
-            <li>Designed RESTful APIs with JWT Authentication, UAM Authorization, Advance Search, and Excel/PDF report
-              generation.</li>
-            <li>Built microservices and contributed to a full-stack Phone Book web application covering both front-end
-              and back-end.</li>
+            <li>Developed web applications using Spring Boot, Angular, and MySQL during a 4-month internship program.</li>
+            <li>Designed RESTful APIs with JWT Authentication, UAM Authorization, Advance Search, and Excel/PDF report generation.</li>
+            <li>Built microservices and contributed to a full-stack Phone Book web application covering both front-end and back-end.</li>
           </ul>
         </div>
       </div>
@@ -1351,16 +1412,104 @@
   <section id="projects" class="section-wrap">
     <div class="section-eyebrow">Projects</div>
     <h2 class="section-title">Things I've Built</h2>
-    <p class="section-sub">Production applications solving real business problems — from cloud storage utilities to
-      real-time monitoring systems.</p>
+    <p class="section-sub">10 production systems spanning DevOps & infrastructure, database engineering, and full-stack development — every one live and maintained end-to-end.</p>
 
     <div class="projects-grid">
+
       <div class="proj-card">
         <div class="proj-num">01</div>
+        <div class="proj-icon">🚀</div>
+        <h3 class="proj-title">Multi-Cloud Kubernetes Platform</h3>
+        <p class="proj-desc">The deployment backbone for all Allatone products. Containerised microservices with Docker & Kubernetes across AWS, Azure and Oracle Cloud simultaneously. Authored versioned Helm charts for repeatable, zero-downtime rollouts, configured Ingress controllers, and tuned CPU/memory/replica budgets.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">Kubernetes</span><span class="proj-pill">Docker</span>
+          <span class="proj-pill">Helm Charts</span><span class="proj-pill">Azure DevOps CI/CD</span>
+          <span class="proj-pill">AWS</span><span class="proj-pill">Azure</span><span class="proj-pill">Oracle OCI</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">02</div>
+        <div class="proj-icon">📊</div>
+        <h3 class="proj-title">Prometheus + Grafana Observability Stack</h3>
+        <p class="proj-desc">Full monitoring stack for the Docker-based MySQL estate — 3 InnoDB Cluster nodes + 2 read replicas. Prometheus scrapes node and DB exporters; Grafana surfaces real-time dashboards for query throughput, replication lag and host health. Fully containerised for offline/VPN environments.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">Prometheus</span><span class="proj-pill">Grafana</span>
+          <span class="proj-pill">Docker</span><span class="proj-pill">MySQL Exporter</span><span class="proj-pill">Nginx</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">03</div>
+        <div class="proj-icon">🔐</div>
+        <h3 class="proj-title">MySQL InnoDB Cluster + Audit System</h3>
+        <p class="proj-desc">Administration and observability for a production 5-node InnoDB Cluster. Python binlog-sync service and auto-generated DDL audit triggers feed a React + Node.js dashboard covering table audit, stored-procedure history, database growth and server health — designed fully for offline VPN use.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">MySQL 8</span><span class="proj-pill">Python Binlog</span>
+          <span class="proj-pill">React</span><span class="proj-pill">Node.js</span><span class="proj-pill">Docker</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">04</div>
+        <div class="proj-icon">🏢</div>
+        <h3 class="proj-title">Allatone HRMS</h3>
+        <p class="proj-desc">Multi-portal HR platform (Admin / Client / Intern) with 30+ modules: payroll engine with PDF payslips, bulk employee upload, KYC, multi-type ticketing, activity logs and gallery. Shipped to web and packaged as a native Android app from the same React codebase via Capacitor.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">React 18 + Vite</span><span class="proj-pill">Node.js</span>
+          <span class="proj-pill">MySQL</span><span class="proj-pill">JWT</span><span class="proj-pill">Capacitor</span><span class="proj-pill">Docker</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">05</div>
+        <div class="proj-icon">🤝</div>
+        <h3 class="proj-title">Vendor Management System (VMS)</h3>
+        <p class="proj-desc">End-to-end vendor lifecycle: 5-step KYC wizard, RFQs, Purchase Orders, invoices, payments, contracts, scorecards and notifications — with AI invoice parsing via Gemini API and live GST/PAN/Aadhaar verification via Perfios APIs. Live at uatvms.Allatone.in.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">React + Vite</span><span class="proj-pill">Node.js</span>
+          <span class="proj-pill">MySQL</span><span class="proj-pill">Gemini AI</span><span class="proj-pill">Perfios API</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">06</div>
+        <div class="proj-icon">📁</div>
+        <h3 class="proj-title">Allatone Files — Cloud FMS</h3>
+        <p class="proj-desc">File management system on Oracle Cloud Object Storage for employees, vendors and clients. Supports bucket/folder management, file locking, time-limited sharing with expiry, versioning, granular permissions and full access logs. Deployed on ARM64 Oracle VM. Live at fms.Allatone.in.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">Node.js</span><span class="proj-pill">React</span>
+          <span class="proj-pill">OCI Object Storage</span><span class="proj-pill">MySQL</span><span class="proj-pill">Docker</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">07</div>
+        <div class="proj-icon">📞</div>
+        <h3 class="proj-title">Asterisk PBX + AI Voice Agent</h3>
+        <p class="proj-desc">Asterisk 22.9.0 compiled from source on Oracle Linux 9 with PJSIP extensions and AGI dialplan integration. Designed an STT/TTS pipeline and FastAGI bridge to a remote Python AI server for handling inbound calls with a live AI agent.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">Asterisk 22.9</span><span class="proj-pill">PJSIP</span>
+          <span class="proj-pill">FastAGI</span><span class="proj-pill">Python STT/TTS</span><span class="proj-pill">Oracle Linux 9</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">08</div>
+        <div class="proj-icon">✉️</div>
+        <h3 class="proj-title">Zimbra Mail Server</h3>
+        <p class="proj-desc">Self-hosted Zimbra FOSS 10.1.16 on OCI Oracle Linux 9 for the company domain. Certbot TLS, DKIM signing and SPF/DMARC alignment — achieving a near-perfect mail-tester.com deliverability score. PTR record obtained via OCI support escalation.</p>
+        <div class="proj-pills">
+          <span class="proj-pill">Zimbra 10.1.16</span><span class="proj-pill">Oracle Linux 9</span>
+          <span class="proj-pill">Certbot / TLS</span><span class="proj-pill">DKIM</span><span class="proj-pill">SPF/DMARC</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">09</div>
         <div class="proj-icon">☁️</div>
         <h3 class="proj-title">Oracle Cloud Storage SFTP App</h3>
-        <p class="proj-desc">A secure utility for uploading and downloading large files from Oracle Object Storage with
-          user access management and full authentication controls.</p>
+        <p class="proj-desc">Secure utility for uploading and downloading large files from Oracle Object Storage with user access management and authentication. Transfers stream directly to OCI buckets via pre-authenticated requests — no in-memory buffering required on constrained servers.</p>
         <div class="proj-pills">
           <span class="proj-pill">Oracle OCI</span><span class="proj-pill">Spring Boot</span>
           <span class="proj-pill">Angular</span><span class="proj-pill">SFTP</span><span class="proj-pill">Java 8</span>
@@ -1368,43 +1517,16 @@
       </div>
 
       <div class="proj-card">
-        <div class="proj-num">02</div>
-        <div class="proj-icon">🎫</div>
-        <h3 class="proj-title">Ticket Management System</h3>
-        <p class="proj-desc">Web-based system to raise, track, and resolve support tickets efficiently. Significantly
-          improved internal communication workflows and incident response times.</p>
-        <div class="proj-pills">
-          <span class="proj-pill">Spring Boot</span><span class="proj-pill">Angular</span>
-          <span class="proj-pill">MySQL</span><span class="proj-pill">Docker</span><span class="proj-pill">REST
-            API</span>
-        </div>
-      </div>
-
-      <div class="proj-card">
-        <div class="proj-num">03</div>
-        <div class="proj-icon">🔍</div>
-        <h3 class="proj-title">Product Query Management System</h3>
-        <p class="proj-desc">Application designed to search and manage product-related information efficiently, enabling
-          rapid querying and retrieval of product data at scale.</p>
-        <div class="proj-pills">
-          <span class="proj-pill">Spring Boot</span><span class="proj-pill">Angular</span>
-          <span class="proj-pill">MySQL</span><span class="proj-pill">JPA/Hibernate</span><span
-            class="proj-pill">Microservices</span>
-        </div>
-      </div>
-
-      <div class="proj-card">
-        <div class="proj-num">04</div>
+        <div class="proj-num">10</div>
         <div class="proj-icon">📡</div>
-        <h3 class="proj-title">URL Monitoring Application</h3>
-        <p class="proj-desc">Monitors application URLs for uptime and downtime with integrated real-time email alert
-          notifications for incident reporting and on-call response management.</p>
+        <h3 class="proj-title">URL Uptime Monitoring Application</h3>
+        <p class="proj-desc">Scheduler-driven monitor polling internal application URLs for uptime and downtime with real-time email alert notifications for incident reporting, on-call escalation and SLA tracking across all Allatone internal services.</p>
         <div class="proj-pills">
           <span class="proj-pill">Spring Boot</span><span class="proj-pill">Scheduler</span>
-          <span class="proj-pill">Email Alerts</span><span class="proj-pill">Angular</span><span
-            class="proj-pill">MySQL</span>
+          <span class="proj-pill">Email Alerts</span><span class="proj-pill">Angular</span><span class="proj-pill">MySQL</span>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -1442,8 +1564,7 @@
   <section id="contact" class="section-wrap">
     <div class="section-eyebrow">Contact</div>
     <h2 class="section-title">Let's Work Together</h2>
-    <p class="section-sub">Open to new roles, collaborations, or just a good conversation about cloud infrastructure and
-      engineering.</p>
+    <p class="section-sub">Open to new roles, collaborations, or just a good conversation about cloud infrastructure and engineering.</p>
 
     <div class="contact-grid">
       <div>
@@ -1461,18 +1582,18 @@
             <div class="c-val">+91 70520 37594</div>
           </div>
         </a>
+        <a href="https://www.linkedin.com/in/ashish-srivastav-432495248" target="_blank" rel="noopener" class="contact-item">
+          <div class="c-icon">💼</div>
+          <div>
+            <div class="c-label">LinkedIn</div>
+            <div class="c-val">ashish-srivastav-432495248</div>
+          </div>
+        </a>
         <div class="contact-item">
           <div class="c-icon">📍</div>
           <div>
             <div class="c-label">Location</div>
             <div class="c-val">Noida, Gautam Buddha Nagar, UP</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="c-icon">⚡</div>
-          <div>
-            <div class="c-label">Specialization</div>
-            <div class="c-val">DevOps · Cloud · Database Administration</div>
           </div>
         </div>
       </div>
@@ -1482,10 +1603,8 @@
           <div class="form-group"><label>Name</label><input type="text" placeholder="Your full name" required></div>
           <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com" required></div>
         </div>
-        <div class="form-group"><label>Subject</label><input type="text" placeholder="Opportunity / Collaboration">
-        </div>
-        <div class="form-group"><label>Message</label><textarea
-            placeholder="Tell me about your project or role..."></textarea></div>
+        <div class="form-group"><label>Subject</label><input type="text" placeholder="Opportunity / Collaboration"></div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Tell me about your project or role..."></textarea></div>
         <button type="submit" class="btn-send">Send Message →</button>
       </form>
     </div>
@@ -1494,16 +1613,54 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-copy">© 2025 Ashish Srivastav · All rights reserved</div>
+    <div class="footer-right">Experience: <span id="footerExp"></span></div>
   </footer>
 
   <script>
-    // Navbar scroll shadow
+    // ── EXPERIENCE CALCULATOR ──
+    // Joining date: Feb 1, 2023 (change if needed)
+    const JOIN = new Date(2023, 1, 1);
+
+    function calcExp() {
+      const now = new Date();
+      let years  = now.getFullYear() - JOIN.getFullYear();
+      let months = now.getMonth()    - JOIN.getMonth();
+      let days   = now.getDate()     - JOIN.getDate();
+
+      if (days   < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+      if (months < 0) { years--;  months += 12; }
+
+      // Decimal years, e.g. "3.4"
+      const decYears = (years + months / 12).toFixed(1);
+      const label    = `${decYears}+`;
+      const full     = `${years} yr${years !== 1 ? 's' : ''} ${months} mo${months !== 1 ? 's' : ''}`;
+
+      // Update all experience placeholders
+      ['statExp', 'expText', 'aboutExp', 'expSub'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = label;
+      });
+
+      // Tenure badge next to date in timeline
+      const badge = document.getElementById('tenureBadge');
+      if (badge) badge.textContent = full;
+
+      // Footer
+      const fe = document.getElementById('footerExp');
+      if (fe) fe.textContent = full + ' at Allatone';
+    }
+
+    calcExp();
+    // Refresh every hour so an open tab stays accurate
+    setInterval(calcExp, 3600000);
+
+    // ── NAVBAR SCROLL SHADOW ──
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    // Intersection Observer
+    // ── INTERSECTION OBSERVER ──
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
@@ -1511,13 +1668,13 @@
     document.querySelectorAll('.tl-item, .proj-card, .edu-card').forEach(el => obs.observe(el));
 
     // Stagger delays
-    document.querySelectorAll('.proj-card').forEach((c, i) => c.style.transitionDelay = `${i * 0.1}s`);
-    document.querySelectorAll('.edu-card').forEach((c, i) => c.style.transitionDelay = `${i * 0.1}s`);
-    document.querySelectorAll('.tl-item').forEach((c, i) => c.style.transitionDelay = `${i * 0.15}s`);
+    document.querySelectorAll('.proj-card').forEach((c, i) => c.style.transitionDelay = `${i * 0.08}s`);
+    document.querySelectorAll('.edu-card').forEach((c, i)  => c.style.transitionDelay = `${i * 0.1}s`);
+    document.querySelectorAll('.tl-item').forEach((c, i)   => c.style.transitionDelay = `${i * 0.15}s`);
 
-    // Active nav
+    // ── ACTIVE NAV ──
     const sections = document.querySelectorAll('section[id]');
-    const links = document.querySelectorAll('.nav-links a');
+    const links    = document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll', () => {
       let cur = '';
       sections.forEach(s => { if (window.scrollY >= s.offsetTop - 160) cur = s.id; });
@@ -1526,7 +1683,7 @@
       });
     });
 
-    // Form handler
+    // ── FORM ──
     function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('.btn-send');
@@ -1540,5 +1697,4 @@
     }
   </script>
 </body>
-
 </html>
